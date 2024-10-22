@@ -13,18 +13,39 @@ if (!$conn) {
 
 // Query untuk menampilkan semua produk
 $result = mysqli_query($conn, "SELECT * FROM Produk");
-
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Produk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50; /* Warna hijau */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #45a049; /* Warna hijau lebih gelap saat hover */
         }
         table {
             width: 100%;
@@ -41,9 +62,26 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
         th {
             background-color: #f2f2f2;
         }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
+
+<header>
+    <h1>Warung Online</h1>
+    <nav>
+        <a href="index.php">Produk</a>
+        <a href="../pemesanan/index_pemesanan.php">Pemesanan</a>
+    </nav>
+</header>
 
 <h2>Daftar Produk</h2>
 <a href="tambah_produk.php">Tambah Produk</a>
@@ -78,8 +116,10 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
     <p>Tidak ada produk.</p>
 <?php endif; ?>
 
-</body>
-</html>
+<footer>
+    <p>&copy; <?php echo date("Y"); ?> Warung Online. All Rights Reserved.</p>
+    <p><a href="https://github.com/username/repository" target="_blank" style="color: white; text-decoration: underline;">Lihat di GitHub</a></p>
+</footer>
 
 <?php
 mysqli_close($conn); // Menutup koneksi
