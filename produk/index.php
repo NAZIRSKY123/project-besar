@@ -21,8 +21,34 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Produk</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .btn-order {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-order:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -72,9 +98,6 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
             width: 100%;
         }
     </style>
-</head>
-<body>
-
 <header>
     <h1>Warung Online</h1>
     <nav>
@@ -82,11 +105,34 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
         <a href="../pemesanan/index_pemesanan.php">Pemesanan</a>
     </nav>
 </header>
+<body>
+    <h1>Daftar Produk</h1>
+    <a href="tambah_produk.php" class="btn-add-gradient">Tambah Produk</a>
 
-<h2>Daftar Produk</h2>
-<a href="tambah_produk.php">Tambah Produk</a>
+<style>
+    .btn-add-gradient {
+        background: linear-gradient(90deg, #4CAF50, #28a745); /* Gradien hijau */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
 
-<?php if (mysqli_num_rows($result) > 0): ?>
+    .btn-add-gradient:hover {
+        background: linear-gradient(90deg, #45a049, #218838); /* Gradien lebih gelap saat hover */
+        transform: scale(1.05); /* Sedikit membesar saat hover */
+    }
+
+    /* Menghapus margin untuk tombol */
+    .btn-add-gradient {
+        margin: 0; /* Pastikan tidak ada jarak */
+    }
+</style>
+
     <table>
         <tr>
             <th>No</th>
@@ -95,7 +141,9 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
             <th>Harga</th>
             <th>Stok</th>
             <th>Aksi</th>
+            
         </tr>
+        
         <?php
         $no = 1;
         while ($row = mysqli_fetch_assoc($result)): ?>
@@ -106,20 +154,51 @@ $result = mysqli_query($conn, "SELECT * FROM Produk");
                 <td><?php echo number_format($row['harga'], 2, ',', '.'); ?></td>
                 <td><?php echo $row['stok']; ?></td>
                 <td>
-                    <a href="edit_produk.php?id=<?php echo $row['id_produk']; ?>">Edit</a> | 
-                    <a href="hapus_produk.php?id=<?php echo $row['id_produk']; ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    <!-- Tombol Order mengarahkan ke form_order.php dengan parameter produk -->
+                    <a href="form_order.php?id_produk=<?= $row['id_produk'] ?>&nama_produk=<?= $row['nama_produk'] ?>&harga=<?= $row['harga'] ?>&stok=<?= $row['stok'] ?>" class="btn-order">Order</a>
+                    <style>
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 14px;
+    color: white;
+    background-color: #007BFF; /* Warna biru */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+}
+
+.button.delete {
+    background-color: #dc3545; /* Warna merah untuk hapus */
+}
+
+.button.delete:hover {
+    background-color: #c82333; /* Warna merah lebih gelap saat hover */
+}
+</style>
+
+<a href="edit_produk.php?id=<?php echo $row['id_produk']; ?>" class="button">Edit</a>
+<a href="hapus_produk.php?id=<?php echo $row['id_produk']; ?>" class="button delete" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+
                 </td>
+                </td>
+                
             </tr>
         <?php endwhile; ?>
     </table>
-<?php else: ?>
-    <p>Tidak ada produk.</p>
-<?php endif; ?>
-
+</body>
+</html>
 <footer>
     <p>&copy; <?php echo date("Y"); ?> Warung Online. All Rights Reserved.</p>
     <p><a href="https://github.com/username/repository" target="_blank" style="color: white; text-decoration: underline;">Lihat di GitHub</a></p>
 </footer>
+
 
 <?php
 mysqli_close($conn); // Menutup koneksi

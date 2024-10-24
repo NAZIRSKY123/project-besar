@@ -31,7 +31,6 @@ if (isset($_GET['id'])) {
         $update_query = "UPDATE Produk SET nama_produk = '$nama_produk', kategori = '$kategori', harga = '$harga', stok = '$stok' WHERE id_produk = $id_produk";
 
         if (mysqli_query($conn, $update_query)) {
-            echo "Produk berhasil diperbarui.";
             header("Location: index.php"); // Redirect ke halaman daftar produk
             exit();
         } else {
@@ -55,54 +54,77 @@ mysqli_close($conn); // Menutup koneksi
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
         }
-        form {
-            width: 300px;
-            margin-top: 20px;
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
         }
         label {
-            display: block;
             margin-bottom: 5px;
+            font-weight: bold;
+            display: block;
         }
-        input[type="text"], input[type="number"], input[type="decimal"] {
+        input[type="text"],
+        input[type="number"] {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
         }
         input[type="submit"] {
-            padding: 10px 15px;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
             color: white;
-            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 
-<h2>Edit Produk</h2>
-<form method="POST" action="">
-    <label for="nama_produk">Nama Produk:</label>
-    <input type="text" id="nama_produk" name="nama_produk" value="<?php echo $produk['nama_produk']; ?>" required>
+<div class="container">
+    <h2>Edit Produk</h2>
+    <form method="POST" action="">
+        <label for="nama_produk">Nama Produk:</label>
+        <input type="text" id="nama_produk" name="nama_produk" value="<?php echo htmlspecialchars($produk['nama_produk']); ?>" required>
 
-    <label for="kategori">Kategori:</label>
-    <input type="text" id="kategori" name="kategori" value="<?php echo $produk['kategori']; ?>" required>
+        <label for="kategori">Kategori:</label>
+        <input type="text" id="kategori" name="kategori" value="<?php echo htmlspecialchars($produk['kategori']); ?>" required>
 
-    <label for="harga">Harga:</label>
-    <input type="number" id="harga" name="harga" step="0.01" value="<?php echo $produk['harga']; ?>" required>
+        <label for="harga">Harga:</label>
+        <input type="number" id="harga" name="harga" step="0.01" value="<?php echo htmlspecialchars($produk['harga']); ?>" required>
 
-    <label for="stok">Stok:</label>
-    <input type="number" id="stok" name="stok" value="<?php echo $produk['stok']; ?>" required>
+        <label for="stok">Stok:</label>
+        <input type="number" id="stok" name="stok" value="<?php echo htmlspecialchars($produk['stok']); ?>" required>
 
-    <input type="submit" value="Perbarui">
-</form>
+        <input type="submit" value="Perbarui">
+    </form>
+</div>
 
 </body>
 </html>

@@ -31,8 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             WHERE id_pemesanan = '$id'";
 
     if (mysqli_query($conn, $sql)) {
-        echo "Data pemesanan berhasil diupdate.";
-        header('Location: index.php'); // Redirect ke halaman daftar pemesanan
+        header('Location: index_pemesanan.php'); // Redirect ke halaman daftar pemesanan
         exit();
     } else {
         echo "Error updating record: " . mysqli_error($conn);
@@ -42,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_query($conn, "SELECT * FROM Pemesanan WHERE id_pemesanan = '$id'");
     $data = mysqli_fetch_assoc($result);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -51,13 +49,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pemesanan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
 
 <h2>Edit Pemesanan</h2>
 <form method="POST">
     <label for="nama_pelanggan">Nama Pelanggan:</label>
-    <input type="text" name="nama_pelanggan" value="<?php echo $data['nama_pelanggan']; ?>" required><br>
+    <input type="text" name="nama_pelanggan" value="<?php echo htmlspecialchars($data['nama_pelanggan']); ?>" required>
 
     <label for="id_produk">Produk:</label>
     <select name="id_produk" required>
@@ -69,20 +115,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "<option value='{$produk['id_produk']}' $selected>{$produk['nama_produk']}</option>";
         }
         ?>
-    </select><br>
+    </select>
 
     <label for="tanggal_pemesanan">Tanggal Pemesanan:</label>
-    <input type="date" name="tanggal_pemesanan" value="<?php echo $data['tanggal_pemesanan']; ?>" required><br>
+    <input type="date" name="tanggal_pemesanan" value="<?php echo $data['tanggal_pemesanan']; ?>" required>
 
     <label for="jumlah">Jumlah:</label>
-    <input type="number" name="jumlah" value="<?php echo $data['jumlah']; ?>" required><br>
+    <input type="number" name="jumlah" value="<?php echo $data['jumlah']; ?>" required>
 
     <label for="status">Status:</label>
     <select name="status" required>
         <option value="Disiapkan" <?php echo ($data['status'] == 'Disiapkan') ? 'selected' : ''; ?>>Disiapkan</option>
         <option value="Dikirim" <?php echo ($data['status'] == 'Dikirim') ? 'selected' : ''; ?>>Dikirim</option>
         <option value="Diterima" <?php echo ($data['status'] == 'Diterima') ? 'selected' : ''; ?>>Diterima</option>
-    </select><br>
+    </select>
 
     <input type="submit" value="Update">
 </form>

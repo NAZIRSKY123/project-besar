@@ -31,6 +31,7 @@ $result = mysqli_query($conn, "
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f8f9fa;
         }
         header {
             background-color: #4CAF50; /* Warna hijau */
@@ -75,6 +76,38 @@ $result = mysqli_query($conn, "
             bottom: 0;
             width: 100%;
         }
+        .button-add, .button-edit, .button-delete, .button-order {
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button-add {
+            background-color: #28a745;
+        }
+        .button-add:hover {
+            background-color: #218838;
+        }
+        .button-edit {
+            background-color: #ffc107;
+        }
+        .button-edit:hover {
+            background-color: #e0a800;
+        }
+        .button-delete {
+            background-color: #dc3545;
+        }
+        .button-delete:hover {
+            background-color: #c82333;
+        }
+        .button-order {
+            background-color: #007bff;
+        }
+        .button-order:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +121,7 @@ $result = mysqli_query($conn, "
 </header>
 
 <h2>Daftar Pemesanan</h2>
-<a href="tambah_pemesanan.php">Tambah Pemesanan</a>
+<a href="tambah_pemesanan.php" class="button-add">Tambah Pemesanan</a>
 
 <?php if (mysqli_num_rows($result) > 0): ?>
     <table>
@@ -106,14 +139,15 @@ $result = mysqli_query($conn, "
         while ($row = mysqli_fetch_assoc($result)): ?>
             <tr>
                 <td><?php echo $no++; ?></td>
-                <td><?php echo $row['nama_pelanggan']; ?></td>
-                <td><?php echo $row['nama_produk']; ?></td>
-                <td><?php echo $row['tanggal_pemesanan']; ?></td>
-                <td><?php echo $row['jumlah']; ?></td>
-                <td><?php echo $row['status']; ?></td>
+                <td><?php echo htmlspecialchars($row['nama_pelanggan']); ?></td>
+                <td><?php echo htmlspecialchars($row['nama_produk']); ?></td>
+                <td><?php echo htmlspecialchars($row['tanggal_pemesanan']); ?></td>
+                <td><?php echo htmlspecialchars($row['jumlah']); ?></td>
+                <td><?php echo htmlspecialchars($row['status']); ?></td>
                 <td>
-                    <a href="edit_pemesanan.php?id=<?php echo $row['id_pemesanan']; ?>">Edit</a> | 
-                    <a href="hapus_pemesanan.php?id=<?php echo $row['id_pemesanan']; ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    <a href="order.php?id=<?php echo $row['id_pemesanan']; ?>" class="button-order">Order</a>
+                    <a href="edit_pemesanan.php?id=<?php echo $row['id_pemesanan']; ?>" class="button-edit">Edit</a>
+                    <a href="hapus_pemesanan.php?id=<?php echo $row['id_pemesanan']; ?>" class="button-delete" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                 </td>
             </tr>
         <?php endwhile; ?>

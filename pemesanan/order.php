@@ -11,39 +11,23 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// Ambil data pemesanan berdasarkan ID
+$id_pemesanan = $_GET['id'];
+$pemesanan_query = mysqli_query($conn, "SELECT * FROM Pemesanan WHERE id_pemesanan = $id_pemesanan");
+$pemesanan = mysqli_fetch_assoc($pemesanan_query);
+
 // Validasi saat form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama_pelanggan = $_POST['nama_pelanggan'];
-    $id_produk = $_POST['id_produk'];
-    $tanggal_pemesanan = $_POST['tanggal_pemesanan'];
-    $jumlah = $_POST['jumlah'];
-    $status = 'Disiapkan'; // Status awal
+    // Proses order di sini (misalnya, update status pemesanan)
+    $status = 'Dipesan'; // Contoh status baru
+    $update_query = "UPDATE Pemesanan SET status = '$status' WHERE id_pemesanan = $id_pemesanan";
 
-    // Cek stok produk
-    $query_stok = mysqli_query($conn, "SELECT stok FROM Produk WHERE id_produk = $id_produk");
-    $row_stok = mysqli_fetch_assoc($query_stok);
-    
-    if ($row_stok['stok'] >= $jumlah && $jumlah > 0) {
-        // Insert pemesanan ke database
-        $query_insert = "INSERT INTO Pemesanan (id_produk, nama_pelanggan, tanggal_pemesanan, jumlah, status) 
-                         VALUES ($id_produk, '$nama_pelanggan', '$tanggal_pemesanan', $jumlah, '$status')";
-        
-        if (mysqli_query($conn, $query_insert)) {
-            // Update stok produk
-            $stok_baru = $row_stok['stok'] - $jumlah;
-            mysqli_query($conn, "UPDATE Produk SET stok = $stok_baru WHERE id_produk = $id_produk");
-            echo "<div class='message success'>Pemesanan berhasil!</div>";
-        } else {
-            echo "<div class='message error'>Error: " . mysqli_error($conn) . "</div>";
-        }
+    if (mysqli_query($conn, $update_query)) {
+        echo "<div class='message success'>Pemesanan berhasil diperbarui!</div>";
     } else {
-        echo "<div class='message error'>Jumlah pemesanan melebihi stok atau tidak valid.</div>";
+        echo "<div class='message error'>Error: " . mysqli_error($conn) . "</div>";
     }
 }
-
-// Ambil data produk untuk dropdown
-$produk_query = mysqli_query($conn, "SELECT * FROM Produk");
-
 ?>
 
 <!DOCTYPE html>
@@ -51,17 +35,13 @@ $produk_query = mysqli_query($conn, "SELECT * FROM Produk");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Pemesanan</title>
+    <title>Order Pemesanan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 20px;
-        }
-        h2 {
-            color: #343a40;
-            text-align: center;
         }
         .form-container {
             background-color: #ffffff;
@@ -80,9 +60,7 @@ $produk_query = mysqli_query($conn, "SELECT * FROM Produk");
             font-weight: bold;
         }
         input[type="text"],
-        input[type="date"],
-        input[type="number"],
-        select {
+        input[type="number"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ced4da;
@@ -121,29 +99,21 @@ $produk_query = mysqli_query($conn, "SELECT * FROM Produk");
 <body>
 
 <div class="form-container">
-    <h2>Tambah Pemesanan</h2>
+    <h2>Order Pemesanan</h2>
     <form method="POST" action="">
         <div class="form-group">
             <label for="nama_pelanggan">Nama Pelanggan:</label>
-            <input type="text" name="nama_pelanggan" required>
+            <input type="text" name="nama_pelanggan" value="<?php echo $pemesanan['nama_pelanggan']; ?>" >
         </div>
         <div class="form-group">
-            <label for="id_produk">Produk:</label>
-            <select name="id_produk" required>
-                <?php while ($row = mysqli_fetch_assoc($produk_query)): ?>
-                    <option value="<?php echo $row['id_produk']; ?>"><?php echo $row['nama_produk']; ?></option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="tanggal_pemesanan">Tanggal Pemesanan:</label>
-            <input type="date" name="tanggal_pemesanan" required>
+            <label for="produk">Produk:</label>
+            <input type="text" name="produk" value="<?php echo $pemesanan['id_produk']; ?>" >
         </div>
         <div class="form-group">
             <label for="jumlah">Jumlah:</label>
-            <input type="number" name="jumlah" min="1" required>
+            <input type="number" name="jumlah" value="<?php echo $pemesanan['jumlah']; ?>">
         </div>
-        <input type="submit" value="Pesan">
+        <input type="submit" value="Konfirmasi Order">
     </form>
 </div>
 
