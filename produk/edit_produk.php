@@ -55,21 +55,24 @@ mysqli_close($conn); // Menutup koneksi
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
+            padding: 0;
+            background-image: url('images/background.jpg'); /* Gambar latar belakang */
+            background-size: cover;
+            background-position: center;
+            color: #333;
         }
         .container {
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9); /* Warna putih transparan */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #28a745;
         }
         label {
             margin-bottom: 5px;
@@ -79,29 +82,34 @@ mysqli_close($conn); // Menutup koneksi
         input[type="text"],
         input[type="number"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: border-color 0.3s;
         }
         input[type="text"]:focus,
         input[type="number"]:focus {
-            border-color: #007bff;
+            border-color: #28a745;
             outline: none;
         }
         input[type="submit"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
         }
         input[type="submit"]:hover {
             background-color: #218838;
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+        input[type="submit"]:active {
+            background-color: #1e7e34;
         }
     </style>
 </head>

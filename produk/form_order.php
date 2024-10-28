@@ -15,27 +15,30 @@ $stok = $_GET['stok'];
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e9ecef;
+            background-image: url('images/background.jpg'); /* Gambar latar belakang */
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color: #333;
         }
 
         .order-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9); /* Warna putih transparan */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 400px;
+            text-align: center;
         }
 
         h2 {
-            text-align: center;
-            color: #333;
             margin-bottom: 20px;
+            color: #28a745;
         }
 
         .order-form {
@@ -77,11 +80,12 @@ $stok = $_GET['stok'];
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .order-form button:hover {
             background-color: #218838;
+            transform: scale(1.05); /* Efek zoom saat hover */
         }
 
         .order-form button:active {
@@ -89,7 +93,6 @@ $stok = $_GET['stok'];
         }
 
         .footer {
-            text-align: center;
             margin-top: 20px;
             font-size: 14px;
             color: #6c757d;
@@ -115,7 +118,7 @@ $stok = $_GET['stok'];
         <input type="number" id="jumlah" name="jumlah" min="1" max="<?= $stok; ?>" required>
 
         <!-- Tombol Pesan -->
-        <button type="submit">Pesan Sekarang</button>
+        <button type="submit">Order  Sekarang</button>
     </form>
     <div class="footer">
         <p>&copy; <?php echo date("Y"); ?> Warung Online</p>
