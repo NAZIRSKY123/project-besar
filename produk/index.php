@@ -37,21 +37,21 @@ $result = mysqli_query($conn, $query);
             color: #333; /* Warna teks default */
         }
         header {
-            background-color: rgba(76, 175, 80, 0.8); /* Warna hijau transparan */
-            color: white;
+            background-color: rgba(255, 182, 193, 0.8); /* Warna pink transparan */
+            color: black;
             padding: 15px 20px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Bayangan halus */
         }
         nav a {
-            color: white;
+            color: black;
             padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
         nav a:hover {
-            background-color: #45a049; /* Warna hijau lebih gelap saat hover */
+            background-color: #ff69b4; /* Pink lebih gelap saat hover */
         }
         h1 {
             text-align: center;
@@ -72,19 +72,19 @@ $result = mysqli_query($conn, $query);
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
-            background-color: #28a745; /* Warna hijau */
-            color: white;
+            background-color: #ff69b4; /* Pink */
+            color: black;
             cursor: pointer;
             margin-left: 5px;
             transition: background-color 0.3s;
         }
         .search-container button:hover {
-            background-color: #218838; /* Warna hijau lebih gelap saat hover */
+            background-color: #ff1493; /* Pink lebih gelap saat hover */
         }
         .btn-add-gradient {
             display: inline-block;
-            background: linear-gradient(90deg, #4CAF50, #28a745);
-            color: white;
+            background: linear-gradient(90deg, #ff69b4, #ff1493);
+            color: black;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -94,64 +94,65 @@ $result = mysqli_query($conn, $query);
             text-align: center;
         }
         .btn-add-gradient:hover {
-            background: linear-gradient(90deg, #45a049, #218838);
+            background: linear-gradient(90deg, #ff1493, #db5e81);
             transform: scale(1.05);
         }
         table {
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
             background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
         th, td {
             padding: 12px;
             text-align: left;
+            border: 1px solid #ddd; /* Subtle border for cells */
         }
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #ff69b4; /* Header background color */
+            color: black;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f9f9f9; /* Light background for even rows */
         }
         tr:hover {
-            background-color: #e2e2e2;
+            background-color: #ffe4e1; /* Highlight row on hover */
         }
         .btn-order, .button {
             display: inline-block;
-            padding: 10px 15px;
+            padding: 8px 12px;
             margin: 5px;
             font-size: 14px;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
         .btn-order {
-            background-color: #28a745;
+            background-color: #ff69b4; /* Pink for order button */
         }
         .btn-order:hover {
-            background-color: #218838;
+            background-color: #ff1493; /* Darker pink on hover */
         }
         .button {
-            background-color: #007BFF;
+            background-color: #db5e81; /* Darker pink for edit button */
         }
         .button:hover {
-            background-color: #0056b3;
+            background-color: #c15a77; /* Darker on hover */
         }
         .button.delete {
-            background-color: #dc3545;
+            background-color: #dc3545; /* Red for delete button */
         }
         .button.delete:hover {
-            background-color: #c82333;
+            background-color: #c82333; /* Darker red on hover */
         }
         footer {
-            background-color: rgba(76, 175, 80, 0.8); /* Warna hijau transparan */
-            color: white;
+            background-color: rgba(255, 182, 193, 0.8); /* Warna pink transparan */
+            color: black;
             text-align: center;
             padding: 10px 0;
             margin-top: 20px;
@@ -175,38 +176,42 @@ $result = mysqli_query($conn, $query);
 
     <h1>Daftar Produk</h1>
     <a href="tambah_produk.php" class="btn-add-gradient">Tambah Produk</a>
+    <a href="../pemesanan/index_pemesanan.php" class="btn-add-gradient">Kembali ke Pemesanan</a> <!-- Kembali button added -->
 
     <table>
-        <tr>
-            <th>No</th>
-            <th>Nama Produk</th>
-            <th>Kategori</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th>Aksi</th>
-        </tr>
-        
-        <?php
-        $no = 1;
-        while ($row = mysqli_fetch_assoc($result)): ?>
+        <thead>
             <tr>
-                <td><?php echo $no++; ?></td>
-                <td><?php echo htmlspecialchars($row['nama_produk']); ?></td>
-                <td><?php echo htmlspecialchars($row['kategori']); ?></td>
-                <td><?php echo number_format($row['harga'], 2, ',', '.'); ?></td>
-                <td><?php echo $row['stok']; ?></td>
-                <td>
-                    <a href="form_order.php?id_produk=<?= $row['id_produk'] ?>&nama_produk=<?= urlencode($row['nama_produk']) ?>&harga=<?= $row['harga'] ?>&stok=<?= $row['stok'] ?>" class="btn-order">Order</a>
-                    <a href="edit_produk.php?id=<?php echo $row['id_produk']; ?>" class="button">Edit</a>
-                    <a href="hapus_produk.php?id=<?php echo $row['id_produk']; ?>" class="button delete" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                </td>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
             </tr>
-        <?php endwhile; ?>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            while ($row = mysqli_fetch_assoc($result)): ?>
+                <tr>
+                    <td><?php echo $no++; ?></td>
+                    <td><?php echo htmlspecialchars($row['nama_produk']); ?></td>
+                    <td><?php echo htmlspecialchars($row['kategori']); ?></td>
+                    <td><?php echo number_format($row['harga'], 2, ',', '.'); ?></td>
+                    <td><?php echo $row['stok']; ?></td>
+                    <td>
+                        <a href="form_order.php?id_produk=<?= $row['id_produk'] ?>&nama_produk=<?= urlencode($row['nama_produk']) ?>&harga=<?= $row['harga'] ?>&stok=<?= $row['stok'] ?>" class="btn-order">Order</a>
+                        <a href="edit_produk.php?id=<?php echo $row['id_produk']; ?>" class="button">Edit</a>
+                        <a href="hapus_produk.php?id=<?php echo $row['id_produk']; ?>" class="button delete" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
     </table>
 
     <footer>
         <p>&copy; <?php echo date("Y"); ?> Warung Online. Hak Cipta Ahmad Munazir</p>
-        <p><a href="https://github.com/NAZIRSKY123" target="_blank" style="color: white; text-decoration: underline;">Lihat di GitHub</a></p>
+        <p><a href="https://github.com/NAZIRSKY123" target="_blank" style="color: black; text-decoration: underline;">Lihat di GitHub</a></p>
     </footer>
 
     <?php mysqli_close($conn); // Menutup koneksi ?>

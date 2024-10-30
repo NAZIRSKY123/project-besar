@@ -41,7 +41,7 @@ if (!$result) {
             background-color: #f4f4f4;
         }
         header {
-            background-color: #007bff;
+            background-color: #007bff; /* Header background color */
             color: white;
             padding: 20px;
             text-align: center;
@@ -63,7 +63,7 @@ if (!$result) {
             transition: background-color 0.3s;
         }
         nav a:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* Darker blue on hover */
         }
         .search-container {
             margin: 15px auto;
@@ -80,14 +80,14 @@ if (!$result) {
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
-            background-color: #17a2b8;
+            background-color: #17a2b8; /* Teal button */
             color: white;
             cursor: pointer;
             margin-left: 5px;
             transition: background-color 0.3s;
         }
         .search-container button:hover {
-            background-color: #138496;
+            background-color: #138496; /* Darker teal on hover */
         }
         h2 {
             text-align: center;
@@ -95,7 +95,7 @@ if (!$result) {
         }
         .button-add {
             display: inline-block;
-            background-color: #007bff; /* Same blue as table header */
+            background-color: #007bff; /* Blue */
             color: white;
             padding: 10px 20px;
             border: none;
@@ -117,19 +117,24 @@ if (!$result) {
             border-radius: 8px;
             overflow: hidden;
         }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
         th {
-            background-color: #007bff;
+            background-color: #007bff; /* Blue header */
             color: white;
+            text-align: left;
+            padding: 12px;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #e3f2fd; /* Light blue for even rows */
+        }
+        tr:nth-child(odd) {
+            background-color: #bbdefb; /* Slightly darker light blue for odd rows */
         }
         tr:hover {
-            background-color: #e6f7ff;
+            background-color: #90caf9; /* Hover effect */
+        }
+        td {
+            padding: 12px;
+            text-align: left;
         }
         .button-edit, .button-delete, .button-order {
             color: white;
@@ -140,25 +145,25 @@ if (!$result) {
             transition: background-color 0.3s;
         }
         .button-edit {
-            background-color: #ffc107;
+            background-color: #ff9800; /* Orange */
         }
         .button-edit:hover {
-            background-color: #e0a800;
+            background-color: #fb8c00; /* Darker orange on hover */
         }
         .button-delete {
-            background-color: #dc3545;
+            background-color: #f44336; /* Red */
         }
         .button-delete:hover {
-            background-color: #c82333;
+            background-color: #e53935; /* Darker red on hover */
         }
         .button-order {
-            background-color: #007bff;
+            background-color: #3f51b5; /* Indigo */
         }
         .button-order:hover {
-            background-color: #0056b3;
+            background-color: #303f9f; /* Darker indigo on hover */
         }
         footer {
-            background-color: #007bff;
+            background-color: #007bff; /* Footer background color */
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -204,6 +209,7 @@ if (!$result) {
 
 <h2>Daftar Pemesanan</h2>
 <a href="tambah_pemesanan.php" class="button-add">Tambah Pemesanan</a>
+<a href="../produk/index.php" class="button-add">Kembali ke Produk</a> <!-- Kembali button added -->
 
 <?php if (mysqli_num_rows($result) > 0): ?>
     <table>
@@ -221,7 +227,6 @@ if (!$result) {
         while ($row = mysqli_fetch_assoc($result)): ?>
             <tr>
                 <td><?php echo $no++; ?></td>
-                
                 <td><?php echo htmlspecialchars($row['nama_pelanggan']); ?></td>
                 <td><?php echo htmlspecialchars($row['nama_produk']); ?></td>
                 <td><?php echo htmlspecialchars($row['tanggal_pemesanan']); ?></td>
