@@ -221,6 +221,7 @@ if (!$result) {
         while ($row = mysqli_fetch_assoc($result)): ?>
             <tr>
                 <td><?php echo $no++; ?></td>
+                
                 <td><?php echo htmlspecialchars($row['nama_pelanggan']); ?></td>
                 <td><?php echo htmlspecialchars($row['nama_produk']); ?></td>
                 <td><?php echo htmlspecialchars($row['tanggal_pemesanan']); ?></td>
